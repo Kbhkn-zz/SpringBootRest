@@ -1,0 +1,32 @@
+body {
+	background-color: lightblue;
+}
+
+.has-error {
+	color: red;
+}
+
+.email.ng-valid {
+	background-color: lightgreen;
+}
+
+.email.ng-dirty.ng-invalid-required {
+	background-color: red;
+}
+
+.email.ng-dirty.ng-invalid-email {
+	background-color: yellow;
+}
+
+
+.name.ng-valid {
+	background-color: lightgreen;
+}
+
+.name.ng-dirty.ng-invalid-required {
+	background-color: red;
+}
+
+.name.ng-dirty.ng-invalid-minlength {
+	background-color: yellow;
+}

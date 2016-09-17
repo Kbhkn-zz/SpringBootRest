@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>Spring Boot Rest With AngularJS Example</title>
+      <link th:href="@{/webjars/bootstrap/3.3.6/css/bootstrap.css}" rel="stylesheet" />
+      <link th:href="@{/css/custom.css}" rel="stylesheet" />
+   </head>
+   <body ng-app="myApp" class="ng-cloak" style="padding: 2%;">
+      <div class="container" ng-controller="CustomerController as ctrl">
+         <div class="panel panel-default">
+            <div class="panel-heading"><span class="lead">Registration Form </span></div>
+            <div class="formcontainer" style="padding: 20px;">
+               <form ng-submit="ctrl.submit()" name="registrationForm" class="form-horizontal">
+                  <input type="hidden" ng-model="ctrl.customer.id" />
+                  <div class="row">
+                     <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="file">Name</label>
+                        <div class="col-md-7">
+                           <input type="text" ng-model="ctrl.customer.name" name="name" class="name form-control input-sm" placeholder="Enter your name" ng-minlength="3" required="required" />
+                           <div class="has-error" ng-show="registrationForm.$dirty">
+                              <span ng-show="registrationForm.name.$error.required">This is a required field</span>
+                              <span ng-show="registrationForm.name.$error.minlength">Minimum length required is 3</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row">
+                     <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="file">Last Name</label>
+                        <div class="col-md-7">
+                           <input type="text" ng-model="ctrl.customer.lastName" name="lastName" class="form-control input-sm" placeholder="Enter your lastname" ng-minlength="3" required="required"/>
+                           <div class="has-error" ng-show="registrationForm.$dirty">
+                              <span ng-show="registrationForm.lastName.$error.required">This is a required field</span>
+                              <span ng-show="registrationForm.lastName.$error.minlength">Minimum length required is 3</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row">
+                     <div class="form-group col-md-12">
+                        <label class="col-md-2 control-lable" for="file">Email</label>
+                        <div class="col-md-7">
+                           <input type="email" ng-model="ctrl.customer.email" name="email" class="email form-control input-sm" placeholder="Enter your Email" required="required" />
+                           <div class="has-error" ng-show="registrationForm.$dirty">
+                              <span ng-show="registrationForm.email.$error.required">This is a required field</span>
+                              <span ng-show="registrationForm.email.$invalid">This field is invalid </span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <div class="row">
+                     <div class="form-actions floatRight" style="float: right;margin-right: 18px;">
+                        <input type="submit" value="{{!ctrl.customer.id ? 'Add' : 'Update'}}" class="btn btn-success btn-sm" ng-disabled="registrationForm.$invalid" />
+                        <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="registrationForm.$pristine">Reset Form</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+         
+         <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading"><span class="lead">All Customers</span></div>
+            <div class="tablecontainer" style="padding-left: 3%;">
+               <table class="table table-hover">
+                  <thead>
+                     <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th width="20%"></th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr ng-repeat="customer in ctrl.customers">
+                        <td><span ng-bind="customer.id"></span></td>
+                        <td><span ng-bind="customer.name"></span></td>
+                        <td><span ng-bind="customer.lastName"></span></td>
+                        <td><span ng-bind="customer.email"></span></td>
+                        <td>
+                           <button type="button" ng-click="ctrl.edit(customer.id)" class="btn btn-primary custom-width">Edit</button> <button type="button" ng-click="ctrl.remove(customer.id)" class="btn btn-danger custom-width">Remove</button>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      <script th:src="@{/webjars/angularjs/1.4.9/angular.js}"></script>
+      <script th:src="@{/js/app.js}"></script>
+      <script th:src="@{/js/service/customer_service.js}"></script>
+      <script th:src="@{/js/controller/customer_controller.js}"></script>
+   </body>
+</html>
