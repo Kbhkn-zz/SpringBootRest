@@ -37,25 +37,25 @@ public class RestWSController {
 	}
 
 	@GetMapping(value = "/customer/{id:^[\\d]+$}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Customer> getCustomer(@PathVariable("id") long id) {
+	public ResponseEntity<?> getCustomer(@PathVariable("id") long id) {
 		logger.info("Fetching Customer with id {}", id);
 
 		Customer customer = customerRepository.findOne(id);
 
 		if (customer == null) {
 			logger.error("{} id not found!", id);
-			return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/customer/", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+	public ResponseEntity<?> createCustomer(@RequestBody Customer customer) {
 
 		if (customerRepository.isCustomerExist(customer.getEmail())) {
 			logger.error("Customer already exist! Customer: {}", customer.toString());
-			return new ResponseEntity<Customer>(HttpStatus.CONFLICT);
+			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 
 		customerRepository.save(customer);
@@ -66,29 +66,29 @@ public class RestWSController {
 	}
 
 	@PutMapping(value = "/customer/{id:^[\\d]+$}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Customer> updateCustomer(@PathVariable("id") long id, @RequestBody Customer customer) {
+	public ResponseEntity<?> updateCustomer(@PathVariable("id") long id, @RequestBody Customer customer) {
 		logger.info("Updating Customer: {} with id: {}", customer.toString(), id);
 
 		Customer currentCustomer = customerRepository.findOne(customer.getId());
 
 		if (currentCustomer == null) {
 			logger.error("Customer: {} with id: {} not found", customer.toString(), id);
-			return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
-		customerRepository.saveAndFlush(customer);
+		customerRepository.save(customer);
 		return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/customer/{id:^[\\d]+$}")
-	public ResponseEntity<Customer> deleteCustomer(@PathVariable("id") long id, HttpServletRequest request) {
+	public ResponseEntity<?> deleteCustomer(@PathVariable("id") long id, HttpServletRequest request) {
 		logger.info("Deleting Customer with id: {}, IP Address: {}", id, IpAddress.getClientRealIpAdress(request));
 
 		Customer customer = customerRepository.findOne(id);
 
 		if (customer == null) {
 			logger.error("Customer doesn't deleted! Id: {} not found!", id);
-			return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 
 		customerRepository.delete(customer);

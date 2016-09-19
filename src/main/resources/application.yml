@@ -1,0 +1,47 @@
+spring:
+  # H2 database conf
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        web-allow-others: false
+        
+  # Datasource conf
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: kbhkn
+    password: 123456
+    driver-class-name: org.h2.Driver
+    initialize: true
+  
+  # JPA conf
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate.format_sql: true
+  
+  # Thymeleaf conf
+  thymeleaf:
+    enabled: true
+    cache: false
+    mode: HTML5
+    prefix: /WEB-INF/
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html; charset=utf-8
+    check-template-location: true
+  
+# Logging conf        
+logging:
+  level:
+    com.kbhkn: DEBUG
+    org.hibernate: WARN
+    org.springframework: WARN
+  
+server:
+  port: 9999
+
