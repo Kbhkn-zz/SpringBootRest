@@ -2,7 +2,7 @@
 
 angular.module('myApp').factory('CustomerService', ['$http', '$q', function($http, $q) {
 
-    var REST_SERVICE_URI = 'http://localhost:9999/customer/';
+    var REST_SERVICE_URI = 'http://localhost:9999/admin/customer/';
 
     var factory = {
         getAllCustomers: getAllCustomers,
